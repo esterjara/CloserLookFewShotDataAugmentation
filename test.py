@@ -24,14 +24,12 @@ from io_utils import model_dict, parse_args, get_resume_file, get_best_file , ge
 
 def feature_evaluation(cl_data_file, model, n_way = 5, n_support = 5, n_query = 15, adaptation = False):
     class_list = cl_data_file.keys()
-
     select_class = random.sample(class_list,n_way)
     z_all  = []
     for cl in select_class:
         img_feat = cl_data_file[cl]
         perm_ids = np.random.permutation(len(img_feat)).tolist()
         z_all.append( [ np.squeeze( img_feat[perm_ids[i]]) for i in range(n_support+n_query) ] )     # stack each batch
-
     z_all = torch.from_numpy(np.array(z_all) )
    
     model.n_query = n_query
@@ -91,11 +89,11 @@ if __name__ == '__main__':
 
     model = model.cuda()
 
-    checkpoint_dir = '%s/checkpoints/%s/%s_%s' %(configs.save_dir, params.dataset, params.model, params.method)
-    if params.train_aug:
-        checkpoint_dir += '_aug'
-    if not params.method in ['baseline', 'baseline++'] :
-        checkpoint_dir += '_%dway_%dshot' %( params.train_n_way, params.n_shot)
+    checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/ResNet10_baseline++_aug/'
+    # if params.train_aug:
+    #     checkpoint_dir += '_aug'
+    # if not params.method in ['baseline', 'baseline++'] :
+    #     checkpoint_dir += '_%dway_%dshot' %( params.train_n_way, params.n_shot)
 
     #modelfile   = get_resume_file(checkpoint_dir)
 
@@ -137,6 +135,8 @@ if __name__ == '__main__':
         else: 
             loadfile    = configs.data_dir[params.dataset] + split + '.json'
 
+        loadfile = '/mnt/home/CloserLookFewShot/labels.json'
+
         novel_loader     = datamgr.get_data_loader( loadfile, aug = False)
         if params.adaptation:
             model.task_update_num = 100 #We perform adaptation on MAML simply by updating more times.
@@ -146,7 +146,6 @@ if __name__ == '__main__':
     else:
         novel_file = os.path.join( checkpoint_dir.replace("checkpoints","features"), split_str +".hdf5") #defaut split = novel, but you can also test base or val classes
         cl_data_file = feat_loader.init_loader(novel_file)
-
         for i in range(iter_num):
             acc = feature_evaluation(cl_data_file, model, n_query = 15, adaptation = params.adaptation, **few_shot_params)
             acc_all.append(acc)

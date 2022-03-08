@@ -23,17 +23,21 @@ def save_features(model, data_loader, outfile ):
     all_labels = f.create_dataset('all_labels',(max_count,), dtype='i')
     all_feats=None
     count=0
-    for i, (x,y) in enumerate(data_loader):
-        if i%10 == 0:
-            print('{:d}/{:d}'.format(i, len(data_loader)))
-        x = x.cuda()
-        x_var = Variable(x)
-        feats = model(x_var)
-        if all_feats is None:
-            all_feats = f.create_dataset('all_feats', [max_count] + list( feats.size()[1:]) , dtype='f')
-        all_feats[count:count+feats.size(0)] = feats.data.cpu().numpy()
-        all_labels[count:count+feats.size(0)] = y.cpu().numpy()
-        count = count + feats.size(0)
+    print(data_loader)
+    for img, label in data_loader:
+        for i, (x,l) in enumerate(zip(img, label)):
+            y = torch.as_tensor(l)
+            if i%10 == 0:
+                print('{:d}/{:d}'.format(i, len(data_loader)))
+            x = x.cuda()
+            x = x.unsqueeze(0) 
+            x_var = Variable(x)
+            feats = model(x_var)
+            if all_feats is None:
+                all_feats = f.create_dataset('all_feats', [max_count] + list( feats.size()[1:]) , dtype='f')
+            all_feats[count:count+feats.size(0)] = feats.data.cpu().numpy()
+            all_labels[count:count+feats.size(0)] = y.cpu().numpy()
+            count = count + feats.size(0)
 
     count_var = f.create_dataset('count', (1,), dtype='i')
     count_var[0] = count
@@ -70,11 +74,14 @@ if __name__ == '__main__':
     else:
         loadfile = configs.data_dir[params.dataset] + split + '.json'
 
-    checkpoint_dir = '%s/checkpoints/%s/%s_%s' %(configs.save_dir, params.dataset, params.model, params.method)
-    if params.train_aug:
-        checkpoint_dir += '_aug'
-    if not params.method in ['baseline', 'baseline++'] :
-        checkpoint_dir += '_%dway_%dshot' %( params.train_n_way, params.n_shot)
+    loadfile = '/mnt/home/CloserLookFewShot/labels.json'
+
+    checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/ResNet10_baseline++_aug/'
+
+    # if params.train_aug:
+    #    checkpoint_dir += '_aug'
+    # if not params.method in ['baseline', 'baseline++'] :
+    #    checkpoint_dir += '_%dway_%dshot' %( params.train_n_way, params.n_shot)
 
     if params.save_iter != -1:
         modelfile   = get_assigned_file(checkpoint_dir,params.save_iter)
@@ -115,8 +122,8 @@ if __name__ == '__main__':
             state[newkey] = state.pop(key)
         else:
             state.pop(key)
-            
-    model.load_state_dict(state)
+
+    model.load_state_dict(state, strict=False)
     model.eval()
 
     dirname = os.path.dirname(outfile)

@@ -1,0 +1,15 @@
+Time: 20220303-060029, Setting: miniImagenet-novel_399-Conv4-baseline-aug 5shot 5way_test, Acc: 600 Test Acc = 85.99% +- 0.71% 
+Time: 20220303-061310, Setting: miniImagenet-novel_399-Conv4-baseline-aug 5shot 5way_test, Acc: 600 Test Acc = 86.32% +- 0.64% 
+Time: 20220303-061837, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 5shot 5way_test, Acc: 600 Test Acc = 75.49% +- 0.84% 
+Time: 20220303-062321, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 5shot 5way_test, Acc: 600 Test Acc = 76.21% +- 0.87% 
+Time: 20220303-063601, Setting: miniImagenet-novel_399-Conv4-baseline-aug 1shot 5way_test, Acc: 600 Test Acc = 66.04% +- 1.05% 
+Time: 20220303-063853, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 1shot 5way_test, Acc: 600 Test Acc = 42.99% +- 1.11% 
+Time: 20220303-203831, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 10shot 5way_test, Acc: 600 Test Acc = 84.43% +- 0.64% 
+Time: 20220303-204734, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 10shot 5way_test, Acc: 600 Test Acc = 84.50% +- 0.72% 
+Time: 20220303-214924, Setting: miniImagenet-novel_399-Conv4-baseline-aug 10shot 5way_test, Acc: 600 Test Acc = 88.52% +- 0.64% 
+Time: 20220304-113004, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 1shot 5way_test, Acc: 600 Test Acc = 36.97% +- 1.35% 
+Time: 20220304-134449, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 5shot 5way_test, Acc: 600 Test Acc = 76.62% +- 0.88% 
+Time: 20220304-134953, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 1shot 5way_test, Acc: 600 Test Acc = 39.14% +- 1.01% 
+Time: 20220304-143807, Setting: miniImagenet-novel_399-Conv4-baseline++-aug 10shot 5way_test, Acc: 600 Test Acc = 79.81% +- 0.80% 
+Time: 20220305-204631, Setting: miniImagenet-novel_399-Conv4-baseline-aug 5shot 5way_test, Acc: 600 Test Acc = 84.62% +- 0.61% 
+Time: 20220305-205055, Setting: miniImagenet-novel_399-Conv4-baseline-aug 1shot 5way_test, Acc: 600 Test Acc = 59.05% +- 0.87% 

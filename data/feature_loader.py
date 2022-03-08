@@ -11,11 +11,13 @@ class SimpleHDF5Dataset:
             self.total = 0 
         else:
             self.f = file_handle
+            print(self.f)
             self.all_feats_dset = self.f['all_feats'][...]
             self.all_labels = self.f['all_labels'][...]
             self.total = self.f['count'][0]
-           # print('here')
+           #
     def __getitem__(self, i):
+        print(torch.Tensor(self.all_feats_dset[i,:]), int(self.all_labels[i]))
         return torch.Tensor(self.all_feats_dset[i,:]), int(self.all_labels[i])
 
     def __len__(self):
@@ -24,7 +26,6 @@ class SimpleHDF5Dataset:
 def init_loader(filename):
     with h5py.File(filename, 'r') as f:
         fileset = SimpleHDF5Dataset(f)
-
     #labels = [ l for l  in fileset.all_labels if l != 0]
     feats = fileset.all_feats_dset
     labels = fileset.all_labels
