@@ -1,10 +1,14 @@
 import backbone
+import time
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
 import numpy as np
 import torch.nn.functional as F
 import utils
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import PIL
 from abc import abstractmethod
 
 class MetaTemplate(nn.Module):
@@ -29,16 +33,23 @@ class MetaTemplate(nn.Module):
         out  = self.feature.forward(x)
         return out
 
-    def parse_feature(self,x,is_feature):
+    def parse_feature(self,x,n,is_feature):
         x    = Variable(x.cuda())
+
         if is_feature:
             z_all = x
         else:
             x           = x.contiguous().view( self.n_way * (self.n_support + self.n_query), *x.size()[2:]) 
             z_all       = self.feature.forward(x)
             z_all       = z_all.view( self.n_way, self.n_support + self.n_query, -1)
-        z_support   = z_all[:, :self.n_support]
-        z_query     = z_all[:, self.n_support:]
+        n_original = self.n_support - n
+        n_generated = int(n/n_original) + 1
+        print('number of generated images --> ', n_generated)
+        print(z_all.shape, '---> z_all', z_all[:, :n_original].shape)
+        z_support   = z_all[:, :n_original][:, :, :n_generated, :]      # n_way x (original+n_generated*generated) x channels
+        z_query     = z_all[:, self.n_support:][:, :, 0, :]             # n_way x n_query x 1600
+
+        print(z_support.shape, z_query.shape)
 
         return z_support, z_query
 
