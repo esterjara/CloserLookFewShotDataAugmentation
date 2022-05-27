@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+"""
+IC-GAN json files
+"""
+__author__ = "Ester Jara Lorente"
+__since__ = "2022/02/03"
+
 import json
 import os
 import pandas as pd

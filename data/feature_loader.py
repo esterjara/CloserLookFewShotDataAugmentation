@@ -1,3 +1,5 @@
+# This code is modified from https://github.com/wyharveychen/CloserLookFewShot
+
 import torch
 import numpy as np
 import h5py

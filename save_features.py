@@ -1,3 +1,5 @@
+# This code is modified from https://github.com/wyharveychen/CloserLookFewShot
+
 import numpy as np
 import torch
 from torch.autograd import Variable
@@ -60,7 +62,7 @@ if __name__ == '__main__':
     loadfile = PATH+'novel.json'
     if params.data_aug == 'icgan':
         generated_loadfile = PATH+'generated_images.json'
-        classes_file = PATH+'samples_dalle.json'
+        classes_file = PATH+'samples.json'
 
     else:
         generated_loadfile = PATH+'generated_images_dalle.json'
@@ -71,19 +73,6 @@ if __name__ == '__main__':
         params.model = 'Conv4S'
 
     split = params.split
-    if params.dataset == 'cross':
-        if split == 'base':
-            loadfile = configs.data_dir['miniImagenet'] + 'all.json' 
-        else:
-            loadfile   = configs.data_dir['CUB'] + split +'.json' 
-    elif params.dataset == 'cross_char':
-        if split == 'base':
-            loadfile = configs.data_dir['omniglot'] + 'noLatin.json' 
-        else:
-            loadfile  = configs.data_dir['emnist'] + split +'.json' 
-    else:
-        loadfile = configs.data_dir[params.dataset] + split + '.json'
-
 
     if params.method == 'baseline':
         checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/Conv4_baseline_aug'
@@ -93,7 +82,7 @@ if __name__ == '__main__':
 
     if params.save_iter != -1:
         modelfile   = get_assigned_file(checkpoint_dir,params.save_iter)
-   else:
+    else:
         modelfile   = get_best_file(checkpoint_dir)
 
     if params.save_iter != -1:
