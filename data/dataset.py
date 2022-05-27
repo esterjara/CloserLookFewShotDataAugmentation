@@ -17,9 +17,10 @@ classes = {"0": ["n01440764", "tench"], "1": ["n01443537", "goldfish"], "2": ["n
 labels = {v[1]:k for k,v in zip(classes.keys(), classes.values())}
 
 class SimpleDataset:
-    def __init__(self, data_file, generated_file, class_file, transform, target_transform=identity):
+    def __init__(self, data_file, generated_file, class_file, generator, transform, target_transform=identity):
         with open(data_file, 'r') as f:
             self.meta = json.load(f)
+        self.generator = generator
         self.transform = transform
         self.target_transform = target_transform
         with open(class_file, 'r') as f:
@@ -31,8 +32,10 @@ class SimpleDataset:
     def __getitem__(self,i):
         image_path = os.path.join(self.meta['image_names'][i])
         label = image_path.split('/')[-2]
-        paths = self.classes[image_path]
-        #paths = self.classes[label]     
+        if self.generator == 'icgan':
+            paths = self.classes[image_path]
+        else:
+            paths = self.classes[label]     
         
         img = Image.open(image_path).convert('RGB')
         img = self.transform(img)

@@ -47,7 +47,7 @@ def save_features(model, data_loader, outfile, n_shot ):
 
 if __name__ == '__main__':
     # Change the "PATH" variable
-    PATH = '/mnt/home/CloserLookFewShotDataAugmentation/'
+    PATH = '/mnt/home/CloserLookFewShotDataAugmentation/json/'
     params = parse_args('save_features')
     assert params.method != 'maml' and params.method != 'maml_approx', 'maml do not support save_feature and run'
 
@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
 
     datamgr         = SimpleDataManager(image_size, batch_size = 1)         # batch_size=64
-    data_loader      = datamgr.get_data_loader(loadfile, generated_loadfile, classes_file, aug = False)
+    data_loader      = datamgr.get_data_loader(loadfile, generated_loadfile, classes_file, generator=params.data_aug, aug = False)
 
     if params.method in ['relationnet', 'relationnet_softmax']:
         if params.model == 'Conv4': 
