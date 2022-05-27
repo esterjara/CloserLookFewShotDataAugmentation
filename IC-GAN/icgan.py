@@ -1,4 +1,12 @@
-#%% 
+#!/usr/bin/env python3
+"""
+IC-GAN: Instance-Conditioned GAN
+
+https://github.com/facebookresearch/ic_gan, Copyright (c) 2021 Facebook
+"""
+__author__ = "Ester Jara Lorente"
+__since__ = "2022/03/27"
+
 import os
 import sys
 import torch
@@ -175,7 +183,6 @@ def image_generator(label, path):
   gen_model = 'icgan'  
   experiment_name = 'icgan_biggan_imagenet_res256'
 
-  #last_gen_model = experiment_name
   size = '256'
   input_feature_index = 3
   num_samples_ranked = 30
@@ -206,7 +213,7 @@ def image_generator(label, path):
   os.makedirs("../img", exist_ok=True)
   os.makedirs("../img/"+str(label), exist_ok=True)
 
-  # input_image_instance = path+'/'+str(sample)
+  # Path of the original image
   input_image_instance = path
   # Load feature extractor (outlier filtering and optionally input image feature extraction)
   feature_extractor, last_feature_extractor = load_feature_extractor(gen_model, last_feature_extractor, feature_extractor)
@@ -296,6 +303,7 @@ if __name__ == "__main__":
   from pytorch_pretrained_biggan import BigGAN, convert_to_images, one_hot_from_names, utils
   os.chdir('./')
 
+  # Path to the original images used as input for the IC-GAN
   novel_path = '/mnt/colab_public/projects/pau/closer_look/filelists/miniImagenet/novel.json'
   with open(novel_path, 'r') as f:
             novel_images = json.load(f)

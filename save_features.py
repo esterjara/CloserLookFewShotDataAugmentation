@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-#torch.cuda.empty_cache()
 from torch.autograd import Variable
 import os
 import glob
@@ -45,6 +44,8 @@ def save_features(model, data_loader, outfile, n_shot ):
     f.close()
 
 if __name__ == '__main__':
+    # Change the "PATH" variable
+    PATH = '/mnt/home/CloserLookFewShotDataAugmentation/'
     params = parse_args('save_features')
     assert params.method != 'maml' and params.method != 'maml_approx', 'maml do not support save_feature and run'
 
@@ -56,6 +57,15 @@ if __name__ == '__main__':
     else:
         image_size = 224
 
+    loadfile = PATH+'novel.json'
+    if params.data_aug == 'icgan':
+        generated_loadfile = PATH+'generated_images.json'
+        classes_file = PATH+'samples_dalle.json'
+
+    else:
+        generated_loadfile = PATH+'generated_images_dalle.json'
+        classes_file = PATH+'samples_dalle.json'
+   
     if params.dataset in ['omniglot', 'cross_char']:
         assert params.model == 'Conv4' and not params.train_aug ,'omniglot only support Conv4 without augmentation'
         params.model = 'Conv4S'
@@ -74,12 +84,6 @@ if __name__ == '__main__':
     else:
         loadfile = configs.data_dir[params.dataset] + split + '.json'
 
-    # loadfile = '/mnt/home/CloserLookFewShot/generated_images.json'                # IC-GAN
-    loadfile = '/mnt/home/CloserLookFewShot/novel.json'                             # DALL·E
-
-
-    # generated_loadfile = '/mnt/home/CloserLookFewShot/generated_images.json'      # IC-GAN
-    generated_loadfile = '/mnt/home/CloserLookFewShot/generated_images_dalle.json'  # DALL·E
 
     if params.method == 'baseline':
         checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/Conv4_baseline_aug'
@@ -97,8 +101,6 @@ if __name__ == '__main__':
     else:
         outfile = os.path.join( checkpoint_dir.replace("checkpoints","features"), split + ".hdf5") 
 
-    # classes_file = '/mnt/home/CloserLookFewShot/samples.json'             # IC-GAN
-    classes_file = '/mnt/home/CloserLookFewShot/samples_dalle.json'         # DALL·E
 
     datamgr         = SimpleDataManager(image_size, batch_size = 1)         # batch_size=64
     data_loader      = datamgr.get_data_loader(loadfile, generated_loadfile, classes_file, aug = False)

@@ -30,8 +30,8 @@ class SimpleDataset:
     def __getitem__(self,i):
         image_path = os.path.join(self.meta['image_names'][i])
         label = image_path.split('/')[-2]
-        # paths = self.classes[image_path]
-        paths = self.classes[label]     
+        paths = self.classes[image_path]
+        #paths = self.classes[label]     
         
         img = Image.open(image_path).convert('RGB')
         img = self.transform(img)

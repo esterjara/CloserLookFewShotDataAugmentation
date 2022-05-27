@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+"""
+Neural network DALL·E Mini to generate images from text captions
+
+https://github.com/borisdayma/dalle-mini, Copyright (c) 2021 Boris Dayma
+https://openai.com/blog/dall-e/, Copyright (c) 2021 OpenAI
+https://github.com/openai/CLIP, Copyright (c) 2021 OpenAI
+"""
+__author__ = "Ester Jara Lorente"
+__since__ = "2022/03/27"
+
+
 import os
 import json
 import random
