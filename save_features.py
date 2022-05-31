@@ -47,7 +47,7 @@ def save_features(model, data_loader, outfile, n_shot ):
 
 if __name__ == '__main__':
     # Change the "PATH" variable
-    PATH = '/mnt/home/CloserLookFewShotDataAugmentation/json/'
+    PATH = '/mnt/home/SyntheticFewShotLearning/json/'
     params = parse_args('save_features')
     assert params.method != 'maml' and params.method != 'maml_approx', 'maml do not support save_feature and run'
 
@@ -78,6 +78,7 @@ if __name__ == '__main__':
         checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/Conv4_baseline_aug'
     else:
         checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/Conv4_baseline++_aug'
+        # checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/ResNet10_baseline++_aug'
 
 
     if params.save_iter != -1:

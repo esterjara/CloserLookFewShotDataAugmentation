@@ -112,13 +112,13 @@ def compute_embeddings(dataloader, count):
 count = math.ceil(10000/BATCH_SIZE)
 
 # data loader for real images
-loadfile = '/mnt/home/CloserLookFewShot/novel.json'  
+loadfile = '/mnt/home/SyntheticFewShotLearning/novel.json'  
 image_size = 84
 datamgr         = SimpleDataManager(image_size, batch_size = 32)         # batch_size=64
 trainloader     = datamgr.get_data_loader(loadfile, aug = False)
 
 # data loader for generated images
-loadfile = '/mnt/home/CloserLookFewShot/generated_images.json'  
+loadfile = '/mnt/home/SyntheticFewShotLearning/generated_images.json'  
 image_size = 84
 datamgr         = NovelDataManager(image_size, batch_size = 32)         # batch_size=64
 genloader     = datamgr.get_data_loader(loadfile, aug = False)

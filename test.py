@@ -96,6 +96,8 @@ if __name__ == '__main__':
         checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/Conv4_baseline_aug'
     else:
         checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/Conv4_baseline++_aug'
+        # checkpoint_dir = '/mnt/colab_public/projects/pau/closer_look/checkpoints/miniImagenet/ResNet10_baseline++_aug'
+
 
     if not params.method in ['baseline', 'baseline++'] : 
         if params.save_iter != -1:
