@@ -5,7 +5,6 @@ from torch.autograd import Variable
 import numpy as np
 import torch.nn.functional as F
 from methods.meta_template import MetaTemplate
-import  pytorch_fid_wrapper as pfw
 
 class BaselineFinetune(MetaTemplate):
     def __init__(self, model_func,  n_way, n_support, loss_type = "softmax"):
@@ -58,17 +57,11 @@ class BaselineFinetune(MetaTemplate):
                 z_batch = z_support[selected_id]
                 y_batch = y_support[selected_id] 
                 g_batch = generated[selected_id]
-                gen = [i for i, x in enumerate(g_batch) if x]
-                n_gen = [i for i, x in enumerate(g_batch) if x == False]
-                # val_fid = pfw.fid(z_batch[gen], real_images=z_batch[n_gen])
                 scores = linear_clf(z_batch)
                 loss = loss_function(scores,y_batch)
                 loss.backward()
                 set_optimizer.step()
             
-        gen = [i for i, x in enumerate(generated) if x]
-        n_gen = [i for i, x in enumerate(generated) if x == False]
-        # val_fid = pfw.fid(z_support[gen], real_images=z_support[n_gen])
         scores = linear_clf(z_query)
         return scores
 
