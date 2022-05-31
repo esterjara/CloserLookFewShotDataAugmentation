@@ -1,19 +1,7 @@
-# A Closer Look at Few-shot Classification
+# Synthetic Few Shot Learning
+This repo contains the reference source code for the paper "When a Word is Worth a Thousand Images: Visual Learning with
+Natural-Language-based Data Augmentation". In this project, we provide a test set for an empirical study of few-shot classification with data augmentation focused on the IC-GAN model and the DALL-E neural network.
 
-This repo contains the reference source code for the paper [A Closer Look at Few-shot Classification](https://arxiv.org/abs/1904.04232) in International Conference on Learning Representations (ICLR 2019). In this project, we provide a integrated testbed for a detailed empirical study for few-shot classification.
-
-
-## Citation
-If you find our code useful, please consider citing our work using the bibtex:
-```
-@inproceedings{
-chen2019closerfewshot,
-title={A Closer Look at Few-shot Classification},
-author={Chen, Wei-Yu and Liu, Yen-Cheng and Kira, Zsolt and Wang, Yu-Chiang and  Huang, Jia-Bin},
-booktitle={International Conference on Learning Representations},
-year={2019}
-}
-```
 
 ## Enviroment
  - Python3
@@ -30,9 +18,9 @@ year={2019}
 
 ## Train
 Run
-```python ./train.py --dataset [DATASETNAME] --model [BACKBONENAME] --method [METHODNAME] [--OPTIONARG]```
+```python train.py --dataset [DATASETNAME] --model [BACKBONENAME] --method [METHODNAME] [--OPTIONARG]```
 
-For example, run `python ./train.py --dataset miniImagenet --model Conv4 --method baseline --train_aug`  
+For example, run `python train.py --dataset miniImagenet --model Conv4 --method baseline --train_aug`  
 Commands below follow this example, and please refer to io_utils.py for additional options.
 
 ## Data Augmentation
@@ -52,12 +40,12 @@ Save the extracted feature before the classifaction layer to increase test speed
 * Modify the variables ```generated_loadfile``` and ```classes_file``` in the ```save_features.py``` script with the JSON files generated above. 
 * Change the ```checkpoint_dir``` varibale in ```save_features.py```
 * Run
-```python ./save_features.py --dataset miniImagenet --model Conv4 --method baseline --train_aug```
+```python save_features.py --dataset miniImagenet --model Conv4 --method baseline --train_aug```
 
 ## Test
 * Change the ```checkpoint_dir``` varibale in ```test.py```
 * Run
-```python ./test.py --dataset miniImagenet --model Conv4 --method baseline --train_aug```
+```python test.py --dataset miniImagenet --model Conv4 --method baseline --train_aug```
 
 _With the parameter **--generated_img** you can determine the number of generated images to be taken into account._
 ## Results
@@ -67,15 +55,9 @@ _With the parameter **--generated_img** you can determine the number of generate
 ## References
 Our testbed builds upon several existing publicly available code. Specifically, we have modified and integrated the following code into this project:
 
-
-* Framework, Backbone, Method: Matching Network
+* Framework: https://github.com/wyharveychen/CloserLookFewShot
+* Backbone, Method: Matching Network
 https://github.com/facebookresearch/low-shot-shrink-hallucinate 
-* Method: Relational Network
-https://github.com/floodsung/LearningToCompare_FSL
-* Method: MAML
-https://github.com/cbfinn/maml  
-https://github.com/dragen1860/MAML-Pytorch  
-https://github.com/katerakelly/pytorch-maml
 * Data Augmentation: IC-GAN
 https://github.com/facebookresearch/ic_gan
 * Data Augmentation: DALL·E Mini
