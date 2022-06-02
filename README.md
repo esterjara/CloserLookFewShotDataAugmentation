@@ -1,7 +1,7 @@
 # Synthetic Few Shot Learning
 This repo contains the reference source code for the paper "When a Word is Worth a Thousand Images: Visual Learning with
-Natural-Language-based Data Augmentation". In this project, we provide a test set for an empirical study of few-shot classification with data augmentation focused on the IC-GAN model and the DALL-E neural network.
-
+Natural-Language-based Data Augmentation". In this project, we provide a test set for an empirical study of the meta-augmentation framework, whereby the addition of randomness given by new images improves generalization to new tasks.
+Two completely different approaches are introduced as synthesized image generators intended to augment novel class data. First, an Instance Conditional GAN (IC-GAN), which takes as input an original image of the set. Secondly, Natual Language is a domain proposed by the DALL·E neural network to generate synthesized images from text captions.
 
 ## Enviroment
  - Python3
@@ -16,6 +16,10 @@ Natural-Language-based Data Augmentation". In this project, we provide a test se
 
 (WARNING: This would download the 155G ImageNet dataset. You can comment out correponded line 5-6 in `download_miniImagenet.sh` if you already have one.) 
 
+### CIFAR-100
+Two Google Colab notebooks are provided, one to generate images with IC-GAN and the other with DALL-E Mini. Then this meta-augmentation is used for the few-shot classification.
+
+
 ## Train
 Run
 ```python train.py --dataset [DATASETNAME] --model [BACKBONENAME] --method [METHODNAME] [--OPTIONARG]```
@@ -24,33 +28,42 @@ For example, run `python train.py --dataset miniImagenet --model Conv4 --method 
 Commands below follow this example, and please refer to io_utils.py for additional options.
 
 ## Data Augmentation
+Creates the folder where all the necessary json files will be stored: `mkdir json`
 #### IC-GAN
 * Change directory to ```cd IC-GAN ```
-* Download all necessary libraries ```python install.py```
 * Generate images from the IC-GAN model ```python icgan.py```
 * Run ```generated_images.py```
 #### DALL·E Mini
 * Change directory to ```cd DALLE ```
-* Download all necessary libraries ```python install.py```
 * Generate images from the DALL·E neural network ```python dalle.py```
 * Run ```generated_images_dalle.py```
 
+(WARNING: The images that will be generated correspond to the novel classes of the mini-ImageNet dataset).
+
 ## Save features
 Save the extracted feature before the classifaction layer to increase test speed. This is not applicable to MAML, but are required for other methods.
-* Modify the variables ```generated_loadfile``` and ```classes_file``` in the ```save_features.py``` script with the JSON files generated above. 
-* Change the ```checkpoint_dir``` varibale in ```save_features.py```
+* Modify the variable `$PATH` with the path to the previously created json folder 
+* Change the ```checkpoint_dir``` variable
 * Run
 ```python save_features.py --dataset miniImagenet --model Conv4 --method baseline --train_aug```
+#### Additional and optional parameters:
+* `split`: base/val/novel
+* `n_shot`: Number of labeled data in each class
+* `data_aug`: icgan or dalle
+* `save_iter`: Save feature from the model trained in x epoch, use the best model if x is -1
 
 ## Test
 * Change the ```checkpoint_dir``` varibale in ```test.py```
 * Run
 ```python test.py --dataset miniImagenet --model Conv4 --method baseline --train_aug```
+#### Additional and optional parameters:
+* `split`: base/val/novel
+* `n_shot`: Number of labeled data in each class
+* `generated_img`: Number of synthetic images used
+* `save_iter`: Saved feature from the model trained in x epoch, use the best model if x is -1
 
-_With the parameter **--generated_img** you can determine the number of generated images to be taken into account._
 ## Results
-* The test results will be recorded in `./record/results.txt`
-* For all the pre-computed results, please see `./record/few_shot_exp_figures.xlsx`. This will be helpful for including your own results for a fair comparison.
+The test results will be recorded in `./record/results.txt`
 
 ## References
 Our testbed builds upon several existing publicly available code. Specifically, we have modified and integrated the following code into this project:
