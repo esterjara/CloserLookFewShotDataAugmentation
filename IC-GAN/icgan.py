@@ -235,7 +235,6 @@ def image_generator(label, path):
 
   # Prepare other variables
   name_file = '%s_class_index%s_instance_index%s'%(gen_model, str(class_index) if class_index is not None else 'None', str(input_feature_index) if input_feature_index is not None else 'None')
-  os.makedirs("../outputs", exist_ok=True)
 
   replace_to_inplace_relu(model)
   ind2name = {index: wn.of2ss('%08dn'%offset).lemma_names()[0] for offset, index in utils.IMAGENET.items()}
@@ -291,6 +290,7 @@ def image_generator(label, path):
   return paths
   
 if __name__ == "__main__":
+  PATH = '../json/samples.json'
   sys.path.append('./CLIP')
   import clip
 
@@ -317,5 +317,5 @@ if __name__ == "__main__":
     generated_images = image_generator(label, input_image_instance)
     dic_samples[input_image_instance] = generated_images
 
-  with open('/mnt/home/CloserLookFewShot/samples.json', 'w') as fp:
+  with open(PATH, 'w') as fp:
     json.dump(dic_samples, fp)
