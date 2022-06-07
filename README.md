@@ -1,8 +1,7 @@
 # Synthetic Few Shot Learning
 This repo contains the reference source code for the paper "When a Word is Worth a Thousand Images: Visual Learning with
 Natural-Language-based Data Augmentation". In this project, we provide a test set for an empirical study of the meta-augmentation framework, whereby the addition of randomness given by new images improves generalization to new tasks.
-Two completely different approaches are introduced as synthesized image generators intended to augment novel class data. First, an Instance Conditional GAN (IC-GAN), which takes as input an original image of the set. Secondly, Natual Language is a domain proposed by the DALL·E neural network to generate synthesized images from text captions.
-
+In particular, two completely different data augmentation approaches are considered: (i) IC-GAN, which generates synthetic images from an original image as input; (ii) DALL·E, which generates plausible images from text captions.
 ## Enviroment
  - Python3
  - [Pytorch](http://pytorch.org/) before 0.4 (for newer vesion, please see issue #3 )
