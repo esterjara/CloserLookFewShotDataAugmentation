@@ -1,5 +1,5 @@
 # This code is modified from https://github.com/facebookresearch/low-shot-shrink-hallucinate
-# This code is modified from https://github.com/wyharveychen/CloserLookFewShot
+# and https://github.com/wyharveychen/CloserLookFewShot
 
 import torch
 from PIL import Image
